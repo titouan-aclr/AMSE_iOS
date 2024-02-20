@@ -44,6 +44,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
     }
 
+    /** VARIABLE DECLARATION   */
     @IBOutlet var collectionView : UICollectionView!
     
     var nbRow : Int = 4
@@ -52,7 +53,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     let cellsSpacing = 10
     
     
-    
+    /** CONSTRUCTORS   */
     required init?(coder aDecoder: NSCoder){
         self.nbRow = 4
         self.nbColumns = 4
@@ -77,19 +78,19 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         super.init(coder: aDecoder)
     }
     
+    
+    /** FUNCTIONS  */
+    // manage collectionview
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("rows \(nbRow)")
         return nbRow
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        print("columns \(nbColumns)")
         return nbColumns
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         cells[indexPath.section][indexPath.row]!.drawCell()
-        print(indexPath)
         return cells[indexPath.section][indexPath.row]!
     }
     
@@ -102,17 +103,28 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         return CGSize(width: (collectionView.frame.width - CGFloat(cellsSpacing * (nbColumns+2))) / CGFloat(nbColumns), height: (collectionView.frame.height - CGFloat(cellsSpacing * (nbRow + 2))) / CGFloat(nbColumns))
     }
     
+    // test remplir le tableau
     @IBAction func fill(){
-        for i in 0...3{
+        /*for i in 0...3{
             for j in 0...3{
                 cells[i][j]!.value = Int(pow(2,Double(j+i*j)))
             }
-        }
+        }*/
+        cells[2][2]!.value = 2
     }
     
+    //gestion des muovements
     @objc func mouvement(sender:UISwipeGestureRecognizer){
         switch sender.direction {
         case UISwipeGestureRecognizer.Direction.right:
+            for i in 0...(nbRow-1) {
+                if(cells[i][2]!.value != 0){
+                    if( cells[i+1][2]!.value != 0){
+                        cells[i+1][2]!.value = cells[1][2]!.value
+                        cells[i][2]!.value = 0
+                    }
+                }
+            }
             print("Droite")
         case UISwipeGestureRecognizer.Direction.left:
             print("Gauche")

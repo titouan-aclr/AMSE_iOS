@@ -27,9 +27,7 @@ class GameCell: UICollectionViewCell{
     }
     
     func drawCell() {
-        print(self.value)
         if texte == nil {
-            print("coucou")
             texte = UILabel(frame: CGRect(x: 0, y: 0, width: self.bounds.size.width, height: self.bounds.size.height))
             texte.numberOfLines = 1
             texte.textAlignment = .center
