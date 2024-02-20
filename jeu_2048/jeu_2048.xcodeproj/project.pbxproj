@@ -16,6 +16,7 @@
 		84AA7D392B84DE3800B57DBA /* jeu_2048Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA7D382B84DE3800B57DBA /* jeu_2048Tests.swift */; };
 		84AA7D432B84DE3800B57DBA /* jeu_2048UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA7D422B84DE3800B57DBA /* jeu_2048UITests.swift */; };
 		84AA7D452B84DE3800B57DBA /* jeu_2048UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA7D442B84DE3800B57DBA /* jeu_2048UITestsLaunchTests.swift */; };
+		84AA7D542B84E7AC00B57DBA /* GameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA7D532B84E7AC00B57DBA /* GameCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		84AA7D3E2B84DE3800B57DBA /* jeu_2048UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = jeu_2048UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		84AA7D422B84DE3800B57DBA /* jeu_2048UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = jeu_2048UITests.swift; sourceTree = "<group>"; };
 		84AA7D442B84DE3800B57DBA /* jeu_2048UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = jeu_2048UITestsLaunchTests.swift; sourceTree = "<group>"; };
+		84AA7D532B84E7AC00B57DBA /* GameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 				84AA7D2A2B84DE3800B57DBA /* Assets.xcassets */,
 				84AA7D2C2B84DE3800B57DBA /* LaunchScreen.storyboard */,
 				84AA7D2F2B84DE3800B57DBA /* Info.plist */,
+				84AA7D532B84E7AC00B57DBA /* GameCell.swift */,
 			);
 			path = jeu_2048;
 			sourceTree = "<group>";
@@ -261,6 +264,7 @@
 				84AA7D262B84DE3700B57DBA /* ViewController.swift in Sources */,
 				84AA7D222B84DE3700B57DBA /* AppDelegate.swift in Sources */,
 				84AA7D242B84DE3700B57DBA /* SceneDelegate.swift in Sources */,
+				84AA7D542B84E7AC00B57DBA /* GameCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
