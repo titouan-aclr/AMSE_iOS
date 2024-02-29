@@ -153,56 +153,37 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         }
     }
     
-    func moveToDirection(direction:Int, x:Int, y:Int) {
-        if(direction == 0){
-            if(x != 0){
-                if(cells[y][x-1]!.value == 0) {
-                    cells[y][x-1]!.value = cells[y][x]!.value
-                    cells[y][x]!.value = 0
-                    moveToDirection(direction: 0, x: x-1, y: y)
-                } else if(cells[y][x-1]!.value == cells[y][x]!.value){
-                    cells[y][x-1]!.value *= 2
-                    cells[y][x]!.value = 0
-                }
-            }
+    func moveToDirection(direction:Int, x:Int, y:Int){
+        var xNext:Int = x
+        var yNext:Int = y
+        var border:Bool
+        
+        switch direction {
+        case 0:
+            border = (x != 0)
+            xNext = x-1
+        case 1:
+            border = (y != 0)
+            yNext = y-1
+        case 2:
+            border = (x != nbColumns-1)
+            xNext = x+1
+        case 3:
+            border = (y != nbRow-1)
+            yNext = y+1
+        default:
+            border = false
+            print("Error wrong direction case")
         }
         
-        if(direction == 1){
-            if(y != 0){
-                if(cells[y-1][x]!.value == 0) {
-                    cells[y-1][x]!.value = cells[y][x]!.value
-                    cells[y][x]!.value = 0
-                    moveToDirection(direction: 1, x: x, y: y-1)
-                } else if(cells[y-1][x]!.value == cells[y][x]!.value){
-                    cells[y-1][x]!.value *= 2
-                    cells[y][x]!.value = 0
-                }
-            }
-        }
-        
-        if(direction == 2){
-            if(x != nbColumns-1){
-                if(cells[y][x+1]!.value == 0) {
-                    cells[y][x+1]!.value = cells[y][x]!.value
-                    cells[y][x]!.value = 0
-                    moveToDirection(direction: 2, x: x+1, y: y)
-                } else if(cells[y][x+1]!.value == cells[y][x]!.value){
-                    cells[y][x+1]!.value *= 2
-                    cells[y][x]!.value = 0
-                }
-            }
-        }
-        
-        if(direction == 3){
-            if(y != nbRow-1){
-                if(cells[y+1][x]!.value == 0) {
-                    cells[y+1][x]!.value = cells[y][x]!.value
-                    cells[y][x]!.value = 0
-                    moveToDirection(direction: 3, x: x, y: y+1)
-                } else if(cells[y+1][x]!.value == cells[y][x]!.value){
-                    cells[y+1][x]!.value *= 2
-                    cells[y][x]!.value = 0
-                }
+        if(border){
+            if(cells[yNext][xNext]!.value == 0) {
+                cells[yNext][xNext]!.value = cells[y][x]!.value
+                cells[y][x]!.value = 0
+                moveToDirection(direction: direction, x: xNext, y: yNext)
+            } else if(cells[yNext][xNext]!.value == cells[y][x]!.value){
+                cells[yNext][xNext]!.value *= 2
+                cells[y][x]!.value = 0
             }
         }
     }
