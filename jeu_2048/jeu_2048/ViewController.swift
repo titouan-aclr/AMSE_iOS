@@ -103,17 +103,19 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         return CGSize(width: (collectionView.frame.width - CGFloat(cellsSpacing * (nbColumns+2))) / CGFloat(nbColumns), height: (collectionView.frame.height - CGFloat(cellsSpacing * (nbRow + 2))) / CGFloat(nbColumns))
     }
     
-    // test remplir le tableau
+    
     @IBAction func fill(){
-        /*for i in 0...3{
-            for j in 0...3{
-                cells[i][j]!.value = Int(pow(2,Double(j+i*j)))
-            }
-        }*/
-        cells[2][0]!.value = 4
-        cells[2][1]!.value = 0
-        cells[2][2]!.value = 4
-        cells[2][3]!.value = 4
+        var x1 = 0, x2=0, y1=0, y2=0
+        
+        while(x1 == x2 && y1 == y2) {
+            x1 = Int.random(in: 0..<(nbColumns-1))
+            y1 = Int.random(in: 0..<(nbRow-1))
+            x2 = Int.random(in: 0..<(nbColumns-1))
+            y2 = Int.random(in: 0..<(nbRow-1))
+        }
+        
+        cells[x1][y1]!.value = 2
+        cells[x2][y2]!.value = 2
         
     }
     
@@ -126,31 +128,28 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                     moveToDirection(direction: 2, x: i, y: j)
                 }
             }
-            print("Droite")
         case UISwipeGestureRecognizer.Direction.left:
             for j in 0...(nbRow-1) {
                 for i in 0...(nbColumns-1) {
                     moveToDirection(direction: 0, x: i, y: j)
                 }
             }
-            print("Gauche")
         case UISwipeGestureRecognizer.Direction.up:
             for j in 0...(nbColumns-1) {
                 for i in 0...(nbRow-1) {
                     moveToDirection(direction: 1, x: j, y: i)
                 }
             }
-            print("Haut")
         case UISwipeGestureRecognizer.Direction.down:
             for j in (0...(nbColumns-1)).reversed() {
                 for i in 0...(nbRow-1) {
                     moveToDirection(direction: 3, x: j, y: i)
                 }
             }
-            print(" Bas")
         default:
             break
         }
+        addRandCell()
     }
     
     func moveToDirection(direction:Int, x:Int, y:Int){
@@ -185,6 +184,25 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 cells[yNext][xNext]!.value *= 2
                 cells[y][x]!.value = 0
             }
+        }
+    }
+    
+    func addRandCell(){
+        var emptyCells:[(x: Int, y: Int)] = []
+        
+        for i in 0...(nbRow-1) {
+            for j in 0...(nbColumns-1) {
+                if(cells[i][j]!.value == 0){
+                    emptyCells.append((x: j, y: i))
+                }
+            }
+        }
+        
+        if(emptyCells.isEmpty){
+            print("Looooser")
+        } else {
+            var index = Int.random(in: emptyCells.indices)
+            cells[emptyCells[index].y][emptyCells[index].x]!.value = 2
         }
     }
     
