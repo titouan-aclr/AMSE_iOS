@@ -42,6 +42,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         detectionMouvementB.direction = .down
         view.addGestureRecognizer(detectionMouvementB)
         
+        fill()
+        
     }
 
     /** VARIABLE DECLARATION   */
@@ -110,7 +112,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     
-    @IBAction func fill(){
+    func fill(){
         var x1 = 0, x2=0, y1=0, y2=0
         
         while(x1 == x2 && y1 == y2) {
@@ -216,18 +218,19 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     func addToScore(toAdd:Int) {
         score += toAdd
         
-        if(toAdd == 2048){
+        if(toAdd == 16){
             displaySuccessAlert()
         }
     }
     
-    func resetGame() {
+    @IBAction func resetGame() {
         for i in 0...(nbRow-1){
             for j in 0...(nbColumns-1){
                 cells[i][j]!.value = 0
             }
         }
         score = 0
+        fill()
     }
     
     func displaySuccessAlert() {
