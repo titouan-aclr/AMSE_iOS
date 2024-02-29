@@ -22,8 +22,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         collectionView.setCollectionViewLayout(layout, animated:false)
         
-        for i in 0...3{
-            for j in 0...3{
+        for i in 0...(nbRow-1){
+            for j in 0...(nbColumns-1){
                 cells[i][j] = collectionView.dequeueReusableCell(withReuseIdentifier: "cell2048", for: NSIndexPath(row: i, section: j)as IndexPath)as? GameCell
             }
         }
@@ -46,9 +46,15 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
 
     /** VARIABLE DECLARATION   */
     @IBOutlet var collectionView : UICollectionView!
+    @IBOutlet weak var scoreDisplay: UILabel!
     
     var nbRow : Int = 4
     var nbColumns : Int = 4
+    var score : Int = 0 {
+        didSet{
+            scoreDisplay.text = score.codingKey.stringValue
+        }
+    }
     var cells:[[GameCell?]]
     let cellsSpacing = 10
     
@@ -182,6 +188,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 moveToDirection(direction: direction, x: xNext, y: yNext)
             } else if(cells[yNext][xNext]!.value == cells[y][x]!.value){
                 cells[yNext][xNext]!.value *= 2
+                addToScore(toAdd: cells[yNext][xNext]!.value)
                 cells[y][x]!.value = 0
             }
         }
@@ -199,13 +206,57 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         }
         
         if(emptyCells.isEmpty){
-            print("Looooser")
+            displayLosingAlert()
         } else {
-            var index = Int.random(in: emptyCells.indices)
+            let index = Int.random(in: emptyCells.indices)
             cells[emptyCells[index].y][emptyCells[index].x]!.value = 2
         }
     }
     
+    func addToScore(toAdd:Int) {
+        score += toAdd
+        
+        if(toAdd == 2048){
+            displaySuccessAlert()
+        }
+    }
+    
+    func resetGame() {
+        for i in 0...(nbRow-1){
+            for j in 0...(nbColumns-1){
+                cells[i][j]!.value = 0
+            }
+        }
+        score = 0
+    }
+    
+    func displaySuccessAlert() {
+        let controller = UIAlertController(title: "Félicitations !", message: "Vous avez réussi à créer une tuile de 2048\nSouhaitez-Vous continuer ?", preferredStyle : .alert)
+                
+        let action1 = UIAlertAction(title: "Continuer", style: .default) { ( action : UIAlertAction ) in
+            
+        }
+        let action2 = UIAlertAction(title: "Recommencer", style: .destructive) { (action: UIAlertAction ) in
+            self.resetGame()
+        }
+        
+        controller.addAction(action1)
+        controller.addAction(action2)
+        
+        self.present(controller, animated : true, completion : nil)
+    }
+    
+    func displayLosingAlert() {
+        let controller = UIAlertController(title: "Dommage !", message: "Toutes les cases sont remplies, vous avez perdu la partie.\n\nScore : \(self.score)", preferredStyle : .alert)
+                
+        let action = UIAlertAction(title: "Recommencer", style: .default) { (action: UIAlertAction ) in
+            self.resetGame()
+        }
+        
+        controller.addAction(action)
+        
+        self.present(controller, animated : true, completion : nil)
+    }
 
 }
 
