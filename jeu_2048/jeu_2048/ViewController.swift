@@ -27,7 +27,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 cells[i][j] = collectionView.dequeueReusableCell(withReuseIdentifier: "cell2048", for: NSIndexPath(row: i, section: j)as IndexPath)as? GameCell
             }
         }
-        collectionView.backgroundColor = UIColor.gray
         
         let detectionMouvementR: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.mouvement))
         detectionMouvementR.direction = .right
@@ -218,7 +217,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     func addToScore(toAdd:Int) {
         score += toAdd
         
-        if(toAdd == 16){
+        if(toAdd == 2048){
             displaySuccessAlert()
         }
     }
