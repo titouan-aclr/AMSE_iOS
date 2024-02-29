@@ -110,30 +110,100 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 cells[i][j]!.value = Int(pow(2,Double(j+i*j)))
             }
         }*/
-        cells[2][2]!.value = 2
+        cells[2][0]!.value = 4
+        cells[2][1]!.value = 0
+        cells[2][2]!.value = 4
+        cells[2][3]!.value = 4
+        
     }
     
     //gestion des muovements
     @objc func mouvement(sender:UISwipeGestureRecognizer){
         switch sender.direction {
         case UISwipeGestureRecognizer.Direction.right:
-            for i in 0...(nbRow-1) {
-                if(cells[i][2]!.value != 0){
-                    if( cells[i+1][2]!.value != 0){
-                        cells[i+1][2]!.value = cells[1][2]!.value
-                        cells[i][2]!.value = 0
-                    }
+            for j in 0...(nbRow-1) {
+                for i in (0...(nbColumns-1)).reversed() {
+                    moveToDirection(direction: 2, x: i, y: j)
                 }
             }
             print("Droite")
         case UISwipeGestureRecognizer.Direction.left:
+            for j in 0...(nbRow-1) {
+                for i in 0...(nbColumns-1) {
+                    moveToDirection(direction: 0, x: i, y: j)
+                }
+            }
             print("Gauche")
         case UISwipeGestureRecognizer.Direction.up:
+            for j in 0...(nbColumns-1) {
+                for i in 0...(nbRow-1) {
+                    moveToDirection(direction: 1, x: j, y: i)
+                }
+            }
             print("Haut")
         case UISwipeGestureRecognizer.Direction.down:
+            for j in (0...(nbColumns-1)).reversed() {
+                for i in 0...(nbRow-1) {
+                    moveToDirection(direction: 3, x: j, y: i)
+                }
+            }
             print(" Bas")
         default:
             break
+        }
+    }
+    
+    func moveToDirection(direction:Int, x:Int, y:Int) {
+        if(direction == 0){
+            if(x != 0){
+                if(cells[y][x-1]!.value == 0) {
+                    cells[y][x-1]!.value = cells[y][x]!.value
+                    cells[y][x]!.value = 0
+                    moveToDirection(direction: 0, x: x-1, y: y)
+                } else if(cells[y][x-1]!.value == cells[y][x]!.value){
+                    cells[y][x-1]!.value *= 2
+                    cells[y][x]!.value = 0
+                }
+            }
+        }
+        
+        if(direction == 1){
+            if(y != 0){
+                if(cells[y-1][x]!.value == 0) {
+                    cells[y-1][x]!.value = cells[y][x]!.value
+                    cells[y][x]!.value = 0
+                    moveToDirection(direction: 1, x: x, y: y-1)
+                } else if(cells[y-1][x]!.value == cells[y][x]!.value){
+                    cells[y-1][x]!.value *= 2
+                    cells[y][x]!.value = 0
+                }
+            }
+        }
+        
+        if(direction == 2){
+            if(x != nbColumns-1){
+                if(cells[y][x+1]!.value == 0) {
+                    cells[y][x+1]!.value = cells[y][x]!.value
+                    cells[y][x]!.value = 0
+                    moveToDirection(direction: 2, x: x+1, y: y)
+                } else if(cells[y][x+1]!.value == cells[y][x]!.value){
+                    cells[y][x+1]!.value *= 2
+                    cells[y][x]!.value = 0
+                }
+            }
+        }
+        
+        if(direction == 3){
+            if(y != nbRow-1){
+                if(cells[y+1][x]!.value == 0) {
+                    cells[y+1][x]!.value = cells[y][x]!.value
+                    cells[y][x]!.value = 0
+                    moveToDirection(direction: 3, x: x, y: y+1)
+                } else if(cells[y+1][x]!.value == cells[y][x]!.value){
+                    cells[y+1][x]!.value *= 2
+                    cells[y][x]!.value = 0
+                }
+            }
         }
     }
     
