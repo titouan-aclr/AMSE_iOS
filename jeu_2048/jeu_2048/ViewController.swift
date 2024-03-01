@@ -19,7 +19,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         layout.sectionInset = UIEdgeInsets.init(top:0, left:CGFloat(cellsSpacing), bottom:0, right:CGFloat(cellsSpacing))
         layout.minimumLineSpacing = CGFloat(cellsSpacing)
         
-        
+        collectionView.layer.cornerRadius = 12
         collectionView.setCollectionViewLayout(layout, animated:false)
         
         for i in 0...(nbRow-1){
@@ -53,7 +53,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var nbColumns : Int = 4
     var score : Int = 0 {
         didSet{
-            scoreDisplay.text = score.codingKey.stringValue
+            scoreDisplay.text = "Score : " + score.codingKey.stringValue
         }
     }
     var cells:[[GameCell?]]
@@ -148,8 +148,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 }
             }
         case UISwipeGestureRecognizer.Direction.down:
-            for j in (0...(nbColumns-1)).reversed() {
-                for i in 0...(nbRow-1) {
+            for j in 0...(nbColumns-1){
+                for i in (0...(nbRow-1)).reversed()  {
                     moveToDirection(direction: 3, x: j, y: i)
                 }
             }
@@ -191,6 +191,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 cells[yNext][xNext]!.value *= 2
                 addToScore(toAdd: cells[yNext][xNext]!.value)
                 cells[y][x]!.value = 0
+                moveToDirection(direction: direction, x: xNext, y: yNext)
             }
         }
     }

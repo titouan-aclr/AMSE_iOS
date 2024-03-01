@@ -27,6 +27,7 @@ class GameCell: UICollectionViewCell{
     }
     
     func drawCell() {
+        self.layer.cornerRadius = 10
         if texte == nil {
             texte = UILabel(frame: CGRect(x: 0, y: 0, width: self.bounds.size.width, height: self.bounds.size.height))
             texte.numberOfLines = 1
